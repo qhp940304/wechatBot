@@ -11,6 +11,7 @@ import ntchat
 分析群属性
 清理僵尸粉
 自动加好友
+防撤销
 '''
 
 sleepMin = 1

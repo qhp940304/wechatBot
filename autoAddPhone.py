@@ -29,8 +29,8 @@ def get_pid(processName):
     for proc in psutil.process_iter():
         try:
             if (proc.name() == processName):
-                print(proc.name())
-                print(str(proc.pid))
+                # print(proc.name())
+                # print(str(proc.pid))
                 return proc.pid
         except psutil.NoSuchProcess:
             pass
@@ -162,12 +162,33 @@ def addPhone(main_Win, app, phone):
 
 
 if __name__ == '__main__':
+    print(
+        '''
+          **********************************************
+          *                 Welcom                     *             
+          *                程序载入中                    *
+          **********************************************
+        '''
+    )
     procId = get_pid("WeChat.exe")
     if (procId == -1):
         print("微信未运行")
+        input('输入任意键结束')
     else:
+        print(
+              '''
+              ***********************************************
+              *                 载入完成                     *             
+              * 程序执行期间，将会占用键盘鼠标，建议电脑空闲时使用  *
+              ***********************************************
+              '''
+              )
         path = ''
-        phoneType = int(input('1：自动添加，2：通过指定文件添加'))
-        if phoneType == 2:
-            path = input('文件路径')
+        phoneType = int(input('0:停止,1：自动添加，2：通过指定文件添加'))
+        if phoneType == 0:
+            print('Bye')
+            time.sleep(2)
+        elif phoneType == 2:
+            path = input('请将excel文件拖入')
+
         get_body(procId, phoneType, path)

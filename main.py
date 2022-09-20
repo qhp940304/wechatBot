@@ -12,6 +12,7 @@ import ntchat
 清理僵尸粉
 自动加好友
 防撤销
+微信多开
 '''
 
 sleepMin = 1
@@ -23,7 +24,7 @@ wechat.open(smart=True)
 wechat.wait_login()
 # 向文件助手发送一条消息
 wechat.send_text(to_wxid="filehelper", content="ntchat登陆成功")
-
+print(wechat.get_room_members('47444853057@chatroom'),'测试群信息')
 
 # 获取好友信息
 def getContacts():

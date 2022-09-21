@@ -9,10 +9,7 @@ import ntchat
 私聊机器人(自动回复消息，自动回复关键词消息[例如节日祝福])
 加群好友(不加群主)
 分析群属性
-清理僵尸粉
-自动加好友
 防撤销
-微信多开
 '''
 
 sleepMin = 1
@@ -24,7 +21,6 @@ wechat.open(smart=True)
 wechat.wait_login()
 # 向文件助手发送一条消息
 wechat.send_text(to_wxid="filehelper", content="ntchat登陆成功")
-print(wechat.get_room_members('47444853057@chatroom'),'测试群信息')
 
 # 获取好友信息
 def getContacts():
@@ -99,19 +95,6 @@ except Exception as e:
     print('发生异常：', e)
 
 
-# for item in rooms:
-#     print('所有群',item)
-#     room_members = wechat.get_room_members(item['wxid'])
-#     # print('成员列表：', room_members)
-#     for x in room_members['member_list']:
-#         print(f"账号：{x['account']},昵称：{x['nickname']}, "
-#               f"性别：{x['sex']},国家：{x['country']},省：{x['province']},市：{x['city']}")
-
-# add_res = wechat.add_room_friend(room_wxid='44606285552@chatroom',
-#                                  wxid='wxid_0s3gctqf9wy012',
-#                                  verify='test'
-#                                  )
-# print('添加好友：',add_res)
 # 注册消息回调
 @wechat.msg_register(ntchat.MT_RECV_TEXT_MSG)
 def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):

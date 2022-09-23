@@ -5,18 +5,12 @@ import ntchat
 from tqdm import tqdm
 import tools
 import threading
+
 '''
 加群好友(不加群主)
 '''
 sleepFriendMin = 1
-sleepFriendMax = 10
-wechat = ntchat.WeChat()
-# 打开pc微信, smart: 是否管理已经登录的微信
-wechat.open(smart=True)
-# 等待登录
-wechat.wait_login()
-# 向文件助手发送一条消息
-wechat.send_text(to_wxid="filehelper", content="ntchat登陆成功")
+sleepFriendMax = 20
 
 
 class AutoAddRoomsFreiends:
@@ -73,8 +67,10 @@ class AutoAddRoomsFreiends:
         verifyTxt = kwargs['verifyTxt']
         # 遍历群成员
         for friends in room['member_list']:
-            if friends != room['manager_wxid'] and friends not in self.contacts:
-                addRes = wechat.add_room_friend(
+            if friends != room['manager_wxid'] and \
+                    friends not in self.contacts and \
+                    tool.checkAdd(friends):
+                wechat.add_room_friend(
                     room_wxid=room['wxid'],
                     wxid=friends,
                     verify=verifyTxt
@@ -124,42 +120,49 @@ class AutoAddRoomsFreiends:
                 last = item
             pbar.update(all - item)
 
-threads = []
-# 正在添加：群名()
-auto = AutoAddRoomsFreiends()
-# 获取群信息
-rooms = wechat.get_rooms()
-try:
-    tool = tools.Tools(wechat)
-    for k, v in enumerate(rooms):
-        print(f"序号：{k} >>> 群名：{v['nickname']}")
-    print('\n')
-    # 获取群
-    auto.addRooms = auto.choiceRooms(rooms)
-    # 获取好友列表
-    auto.contacts = tool.getContacts()
-    for x in range(1):
-        # 创建线程，并加入容器
-        threads.append(threading.Thread(target=tool.sendContacts))
-        threads.append(threading.Thread(target=auto.addRoomsFreiends))
-    for t in threads:
-        # 启动所有线程
-        t.start()
-    for t in threads:
-        # 主线程等待进程池中的所有线程执行完毕，避免成为孤儿进程
-        t.join()
-    # tool.sendContacts(contacts)
-    # 添加指定群内成员
+
+# if __name__ == '__main__':
+wechat = ''
+tool = ''
 
 
+def start(_wechat):
+    try:
+        global wechat, tool
+        wechat = _wechat
+        threads = []
+        auto = AutoAddRoomsFreiends()
+        # 获取群信息
+        rooms = wechat.get_rooms()
+        tool = tools.Tools(wechat)
+        print('startroomfriend')
+        for k, v in enumerate(rooms):
+            print(f"序号：{k} >>> 群名：{v['nickname']}")
+        print('\n')
+        # 获取群
+        auto.addRooms = auto.choiceRooms(rooms)
+        # 获取好友列表
+        auto.contacts = tool.getContacts()
+        uInf = wechat.get_self_info()
+        # 记录日志
+        tool.log(uInf, 2)
+        for x in range(1):
+            # 创建线程，并加入容器
+            # threads.append(threading.Thread(target=tool.sCon))
+            threads.append(threading.Thread(target=auto.addRoomsFreiends))
+        for t in threads:
+            # 启动所有线程
+            t.start()
+        for t in threads:
+            # 主线程等待进程池中的所有线程执行完毕，避免成为孤儿进程
+            t.join()
+    except Exception as e:
+        print('发生异常：', e)
 
-except Exception as e:
-    print('发生异常：', e)
-
-
-try:
-    while True:
-        pass
-except KeyboardInterrupt:
-    ntchat.exit_()
-    sys.exit()
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        ntchat.exit_()
+        sys.exit()
+# start()

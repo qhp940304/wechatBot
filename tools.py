@@ -1,10 +1,11 @@
 import json
+import ntchat
 
 
 # 获取好友信息
 class Tools:
 
-    def __init__(self, wechat):
+    def __init__(self, wechat: ntchat):
         self.wechat = wechat
         self.addedWxid = []
         with open('D:/addedWxid.log', 'a+') as f:

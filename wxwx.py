@@ -14,12 +14,13 @@ _str = '**************************************\n' \
        '* 有问题或建议请联系公众号：嘿python *\n' \
        '**************************************\n'
 print(_str)
-# 获取群信息
-wechat = ntchat.WeChat()
+
 try:
+    wechat = ntchat.WeChat()
     wechat.open(smart=True)
     # 等待登录
     wechat.wait_login()
+
 except Exception as e:
     print('微信版本不对应，请在公众号(嘿python)下载指定版本微信', e)
     exit(0)

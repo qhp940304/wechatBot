@@ -123,7 +123,7 @@ class AutoAddRoomsFreiends:
 
 # if __name__ == '__main__':
 wechat = ''
-tool = ''
+tool: tools
 
 
 def start(_wechat):

@@ -86,8 +86,8 @@ class OneWay:
 
 
 # if __name__ == '__main__':
-tool = ''
-wechat = ''
+tool :tools
+wechat :chat
 
 
 def start(_wechat):

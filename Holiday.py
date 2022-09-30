@@ -17,20 +17,20 @@ class Holiday:
         self.now = 0
         self.friend = ''
         self.sendTxt = '这里写你的节日祝福'
-
+        # 休眠几秒再发下一个人，根据自己实际情况修改
+        self.sleep = 3
     def send(self):
         contacts = self.tool.getContacts()
-        # print(contacts)
         contacts = {k: v for k, v in contacts.items() if v['remark']}
         self.all = len(contacts)
-        # print(self.all)
         for k, v in contacts.items():
-            # print(k,v)
             if v['remark']:
                 self.now += 1
                 self.friend = v['remark']
+                # 测试完成后，打开下面的注释，就可以正式发送了
                 # wechat.send_text(to_wxid=k, content=f"{v['remark']},{self.sendTxt}")
-                time.sleep(0.01)
+                # 休眠几秒再发下一个人
+                time.sleep(self.sleep)
 
     def showTqdm(self):
         last = 0
@@ -52,10 +52,8 @@ def start(_wechat):
             threads.append(threading.Thread(target=auto.showTqdm))
             threads.append(threading.Thread(target=auto.send))
         for t in threads:
-            # 启动所有线程
             t.start()
         for t in threads:
-            # 主线程等待进程池中的所有线程执行完毕，避免成为孤儿进程
             t.join()
     except Exception as e:
         print('发生异常：', e)

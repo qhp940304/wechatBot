@@ -12,7 +12,6 @@ from pyclick import HumanClicker
 import pandas as pd
 from faker import Faker
 
-
 import tools
 
 
@@ -26,7 +25,7 @@ class AutoAddPhone:
         self.sign = '陌生'
         # 随机睡眠时长
         self.sleepMin = 1
-        self.sleepMax = 10
+        self.sleepMax = 120
         self.procId = 0
         self.phoneType = 1
         self.path = ''
@@ -150,7 +149,6 @@ class AutoAddPhone:
         pyautogui.hotkey('backspace')
 
         # 键入内容
-        phone = 'j39yy6ryigzw22'
         searchEdit.type_keys(phone)
         # 找到【网络查找手机/QQ号】按钮
         try:
@@ -192,7 +190,7 @@ class AutoAddPhone:
 
 
 wechat = ''
-tool = ''
+tool: tools
 
 
 # if __name__ == '__main__':

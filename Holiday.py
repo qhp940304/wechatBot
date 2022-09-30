@@ -1,4 +1,5 @@
 # 根据备注发送节日祝贺，没备注的不发
+# self.sendTxt为节日祝福语，要自己写
 import sys
 import threading
 import time
@@ -15,17 +16,22 @@ class Holiday:
         self.all = 1
         self.now = 0
         self.friend = ''
-        self.sendTxt = '节日祝福'
+        self.sendTxt = '这里写你的节日祝福'
 
     def send(self):
         contacts = self.tool.getContacts()
+        # print(contacts)
+        contacts = {k: v for k, v in contacts.items() if v['remark']}
         self.all = len(contacts)
+        # print(self.all)
         for k, v in contacts.items():
+            # print(k,v)
             if v['remark']:
                 self.now += 1
                 self.friend = v['remark']
-                # wechat.send_text(to_wxid=k, content=v['remark']+self.sendTxt)
-                time.sleep(0.3)
+                # wechat.send_text(to_wxid=k, content=f"{v['remark']},{self.sendTxt}")
+                time.sleep(0.01)
+
     def showTqdm(self):
         last = 0
         with tqdm(total=self.all, unit='人') as pbar:
@@ -34,7 +40,7 @@ class Holiday:
                 pbar.update(self.now - last)
                 last = self.now
             pbar.update(self.all - self.now)
-
+        print('Done')
 
 def start(_wechat):
     try:
@@ -71,4 +77,5 @@ if __name__ == '__main__':
         start(wechat)
     except Exception as e:
         print('微信版本不对应，请在公众号(嘿python)下载指定版本微信', e)
-        exit(0)
+        ntchat.exit_()
+        sys.exit()

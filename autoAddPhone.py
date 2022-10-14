@@ -59,7 +59,7 @@ class AutoAddPhone:
         bottom = element_position.bottom
         x = int(right - (right - left) / 10 * xc)
         y = int(bottom - (bottom - top) / 10 * yc)
-        return (x, y)
+        return x, y
 
     # 获取主窗口
     def get_body(self):
